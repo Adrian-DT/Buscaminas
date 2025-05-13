@@ -27,13 +27,9 @@ JavaScript ES6
 
 ✨ Por hacer
 
-Selector de dificultad personalizado
-
-Animaciones al ganar/perder
-
-Marcar y destapar
-
 Actualizar minas restantes
 
 Destapar tablero
+
+Solucionar errores
 
