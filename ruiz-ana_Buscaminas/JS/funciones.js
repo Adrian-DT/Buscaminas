@@ -1,13 +1,27 @@
-/* objeto buscaminas con atributos */
 const buscaminas = {
-    nMinasTot: 6,
+    nMinasTot: 0,
     nMinasEncontradas: 0,
-    nFilas: 5,
-    nColumnas: 5,
+    nFilas: 0,
+    nColumnas: 0,
     campoMinas: []
 }
 
-/* funcion para generar la matriz del campo de minas */
+function pintarTablero(nFilas,nColumnas){
+    const tablero = document.querySelector("#tablero");
+    tablero.style.gridTemplateColumns = "repeat("+nColumnas+",25px)";
+    tablero.style.gridTemplateRows = "repeat("+nFilas+",25px)";
+
+    for(let i=0;i<nColumnas;i++){
+        for(let j=0;j<nFilas;j++){
+            const casilla = document.createElement('div');
+            casilla.setAttribute("id","F" + i + "C" + j);
+            casilla.addEventListener("contextmenu",marcar);
+            casilla.addEventListener("click",destapar);
+            tablero.appendChild(casilla);
+        }
+    }
+}
+
 function generarCampoMinas() {
     buscaminas.campoMinas = new Array(buscaminas.nFilas);
 
@@ -17,29 +31,28 @@ function generarCampoMinas() {
 }
 
 function esparcirMinas(cantidadMinas) {
-    let minasEsparcidas = 0;
+    let minas = 0;
 
-    while (minasEsparcidas < buscaminas.nMinasTot) {
+    while (minas < buscaminas.nMinasTot) {
         let fila = Math.floor(Math.random() * buscaminas.nFilas);
         let columna = Math.floor(Math.random() * buscaminas.nColumnas);
 
 
         if (buscaminas.campoMinas[fila][columna] != "B") {
             buscaminas.campoMinas[fila][columna] = "B";
-            minasEsparcidas++;
+            minas++;
         }
     }
 }
 
-
 function minasAlrededor(fila, columna) {
-    let minasAlrededor = 0;
+    let nMinasAlrededor = 0;
 
     for (let i = fila - 1; i <= fila + 1; i++) {
 
         for (let j = columna - 1; j <= columna + 1; j++) {
             if (i >= 0 && j >= 0 && i < buscaminas.nFilas && j < buscaminas.nColumnas) {
-                minasAlrededor++;
+                nMinasAlrededor++;
 
                 if (buscaminas.campoMinas[i][j] == "B") {
 
@@ -47,9 +60,8 @@ function minasAlrededor(fila, columna) {
             }
         }
     }
-    buscaminas.campoMinas[fila][columna] = minasAlrededor;
+    buscaminas.campoMinas[fila][columna] = nMinasAlrededor;
 }
-
 
 function contarMinas() {
     for (let i = 0; buscaminas.nFilas > i; i++) {
@@ -61,30 +73,70 @@ function contarMinas() {
     }
 }
 
-
-function inicio() {
-    
-}
-/* con esta funcion creamos las filas y columnas del tablero, con el estilo grid tocando el CSS con
-querySelector */
-function pintarTablero(nFilas, nColumnas) {
-    document.querySelector('#tablero').style.gridTemplateColumns = "repeat(" + nColumnas + ", 25px)";
-    document.querySelector('#tablero').style.gridTemplateRows = "repeat(" + nFilas + ", 25px)";
-    const tablero = document.getElementById('tablero');
-
-    for (let filas = 0; filas < nFilas; filas++) {
-        for (let columnas = 0; columnas < nColumnas; columnas++) {
-            const casilla = document.createElement('div');
-            tablero.appendChild(casilla);
+function destaparCasilla(fila, columna){
+    if (fila >= 0 && fila < buscaminas.nFilas && columna >= 0 && columna < buscaminas.nColumnas){
+        let casilla = document.getElementById("F" + fila + "C" + columna);
+        if (!casilla.classList.contains("destapado")){
+            if (!casilla.innerHTML.includes('<img class="bandera"')){
+                casilla.classList.add("destapado");
+            }
+              casilla.innerHTML = buscaminas.campoMinas[fila][columna];
         }
     }
 }
 
+function inicio() {
+    let dificultad = 0;
+    do{
+        dificultad = prompt("Introduce la dificultad. 1:Fácil  2:Medio  3:Difícil");
+        dificultad = Number(dificultad);
+    } while(isNaN(dificultad) || !Number.isInteger(dificultad) || dificultad < 1 || dificultad > 3);
+    
+    switch (dificultad){
+        case 1:
+            buscaminas.nMinasTot = 10;
+            buscaminas.nColumnas = 8;
+            buscaminas.nFilas = 8;
+        break;
+        case 2:
+            buscaminas.nMinasTot = 40;
+            buscaminas.nColumnas = 16;
+            buscaminas.nFilas = 16;
+        break;
+        case 3:
+            buscaminas.nMinasTot = 99;
+            buscaminas.nFilas = 16;
+            buscaminas.nColumnas = 30;
+        break;
+    }
+    pintarTablero(buscaminas.nFilas,buscaminas.nColumnas);
+    generarCampoMinas();
+    esparcirMinas();
+    contarMinas();
+}
 
+function marcar(e){
+    e.preventDefault();
+    console.log("Has marcado la casilla " + e.target.id);
+}
 
+function destapar(e){
+    console.log("Has destapado la casilla " + e.target.id);
 
+    let casilla = e.currentTarget;
+    let fila;
+    let columna;
+     if(casilla.id[2] == "C"){
+        fila = casilla.id[1];
+        columna = casilla.id.slice(3);
+    } else {
+        fila = casilla.id.slice(1,3);
+        columna = casilla.id.slice(4);
+    }
+    fila = Number(fila);
+    columna = Number(columna);
 
+     destaparCasilla(fila, columna);
+}
 
-generarCampoMinas(16, 20);
-pintarTablero(16, 20);
-esparcirMinas();
+window.onload = inicio();
