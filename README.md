@@ -26,6 +26,7 @@ JavaScript ES6
 
 
 ✨ Por hacer
+
 Selector de dificultad personalizado
 
 Animaciones al ganar/perder
