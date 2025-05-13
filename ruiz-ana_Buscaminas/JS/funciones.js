@@ -81,6 +81,24 @@ function destaparCasilla(fila, columna){
                 casilla.classList.add("destapado");
             }
               casilla.innerHTML = buscaminas.campoMinas[fila][columna];
+            casilla.classList.add("c" + buscaminas.campoMinas[fila][columna])
+
+             if(buscaminas.campoMinas[fila][columna] !== "B"){
+                if(buscaminas.campoMinas[fila][columna] == 0){
+                    destaparCasilla(fila-1,columna-1);
+                    destaparCasilla(fila-1,columna);
+                    destaparCasilla(fila-1,columna+1);
+                    destaparCasilla(fila,columna-1);
+                    destaparCasilla(fila,columna);
+                    destaparCasilla(fila+1,columna-1);
+                    destaparCasilla(fila+1,columna);
+                    destaparCasilla(fila+1,columna+1);
+                    
+                    casilla.innerHTML = "";
+                }
+            } else {
+                casilla.innerHTML = '<img class="explosion" src="IMAGENES/icons/explosion.png">'
+            }
         }
     }
 }
