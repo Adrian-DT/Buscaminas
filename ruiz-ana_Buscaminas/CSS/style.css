@@ -12,3 +12,19 @@
     border-bottom: 2px solid #a9a9a9;
     
 }
+
+#tablero div.destapado {
+    border-left: 2px solid #a9a9a9;
+    border-top: 2px solid #a9a9a9;
+    border-right: 2px solid #D3D3D3;
+    border-bottom: 2px solid #D3D3D3;
+}
+
+#tablero div.c1 {color: rgb(241, 186, 91);}
+#tablero div.c2 {color: rgb(80, 171, 80);}
+#tablero div.c3 {color: rgb(96, 179, 231);}
+#tablero div.c4 {color: rgb(46, 46, 100);}
+#tablero div.c5 {color: rgb(122, 46, 105);}
+#tablero div.c6 {color: rgb(68, 56, 10);}
+#tablero div.c7 {color: rgb(134, 135, 64);}
+#tablero div.c8 {color: rgb(123, 52, 52);}
