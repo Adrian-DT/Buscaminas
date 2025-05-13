@@ -30,6 +30,7 @@
 #tablero div.c7 {color: rgb(134, 135, 64);}
 #tablero div.c8 {color: rgb(123, 52, 52);}
 
-.explosion{
-    width: 15px;
+.explosion, .bandera, .duda, .banderaMal{
+    width: 20px;
+    text-align: center;
 }
