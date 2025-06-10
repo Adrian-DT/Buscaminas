@@ -162,6 +162,7 @@ function resolverTablero(resultado) {
                 casillas[i].innerHTML = '<img class="bomba" src="IMAGENES/icons/bomba.png">';
             } else {
                 casillas[i].innerHTML = '<img class="banderaMal" src="IMAGENES/icons/banderaMal.png">';
+                buscaminas.nMinasEncontradas++;
                 resultado = false;
             }
         } else if (!casillas[i].classList.contains("destapado")) {
@@ -173,8 +174,10 @@ function resolverTablero(resultado) {
     }
 
     if (resultado) {
-        alert("FELICIDADES HAS GANADO!")
-
+        document.querySelector('#resultado').innerHTML = `¡Felicidades, has ganado!`
+        alert("¡FELICIDADES, HAS GANADO!")
+    } else {
+        document.querySelector('#resultado').innerHTML = `¡Has encontrado ${buscaminas.nMinasEncontradas} minas!`
     }
 }
 
@@ -187,12 +190,12 @@ function resolverTablero(resultado) {
 
         if (casilla.innerHTML.includes('<img class="bandera')) {
             casilla.innerHTML = '<img class="duda" src="IMAGENES/icons/interrogacion.png">'
-            buscaminas.nMinasEncontradas--;
+            // buscaminas.nMinasEncontradas--;
         } else if (casilla.innerHTML.includes('<img class="duda')) {
             casilla.innerHTML = "";
         } else {
             casilla.innerHTML = '<img class="bandera" src="IMAGENES/icons/bandera.png">'
-            buscaminas.nMinasEncontradas++;
+            // buscaminas.nMinasEncontradas++;
         }
 
         if (buscaminas.nMinasEncontradas == buscaminas.nMinasTot) {
