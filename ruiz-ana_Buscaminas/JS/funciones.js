@@ -104,6 +104,7 @@ function destaparCasilla(fila, columna) {
 
 function inicio() {
     let dificultad = 0;
+    let parrafo = document.querySelector('#parrafo')
     do {
         dificultad = prompt("Introduce la dificultad. 1:Fácil  2:Medio  3:Difícil");
         dificultad = Number(dificultad);
@@ -114,16 +115,19 @@ function inicio() {
             buscaminas.nMinasTot = 10;
             buscaminas.nColumnas = 8;
             buscaminas.nFilas = 8;
+            parrafo.innerHTML += `Fácil<br>Número de minas: ${buscaminas.nMinasTot}`;
             break;
         case 2:
             buscaminas.nMinasTot = 40;
             buscaminas.nColumnas = 16;
             buscaminas.nFilas = 16;
+            parrafo.innerHTML += `Media<br>Número de minas: ${buscaminas.nMinasTot}`;
             break;
         case 3:
             buscaminas.nMinasTot = 99;
             buscaminas.nFilas = 16;
             buscaminas.nColumnas = 30;
+            parrafo.innerHTML += `Difícil<br>Número de minas: ${buscaminas.nMinasTot}`;
             break;
     }
     pintarTablero(buscaminas.nFilas, buscaminas.nColumnas);
@@ -215,6 +219,12 @@ function resolverTablero(resultado) {
         columna = Number(columna);
 
         destaparCasilla(fila, columna);
+
+        document.querySelector('#reiniciar').style.display = "block";
     }
+
+document.querySelector('#reiniciar').addEventListener('click', () => {
+    location.reload();
+});
 
     window.onload = inicio();

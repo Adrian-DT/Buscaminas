@@ -1,4 +1,6 @@
 #tablero {
+    margin: 0 auto;
+    width: fit-content;
     display: grid;
     grid-template-columns: repeat(4, 25px);
     grid-template-rows: repeat(3, 25px);
@@ -33,4 +35,19 @@
 .explosion, .bandera, .duda, .banderaMal{
     width: 20px;
     text-align: center;
+}
+
+input#reiniciar {
+    margin: 10px auto;
+    display: none;
+}
+
+body{
+    margin: 0 auto;
+    width: fit-content;
+    text-align: center;
+}
+
+div img{
+    width: 20px;
 }
