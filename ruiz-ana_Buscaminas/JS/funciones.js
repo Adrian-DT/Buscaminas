@@ -77,34 +77,34 @@ function contarMinas() {
 function destaparCasilla(fila, columna) {
     if (fila >= 0 && fila < buscaminas.nFilas && columna >= 0 && columna < buscaminas.nColumnas) {
         let casilla = document.getElementById("F" + fila + "C" + columna);
+
         if (!casilla.classList.contains("destapado")) {
-            if (!casilla.innerHTML.includes('<img class="bandera"')) {
+
+            // Solo procede si NO hay bandera
+            if (!casilla.querySelector('img.bandera')) {
+
                 casilla.classList.add("destapado");
+                casilla.innerHTML = buscaminas.campoMinas[fila][columna];
+                casilla.classList.add("c" + buscaminas.campoMinas[fila][columna]);
 
-            }
-            casilla.innerHTML = buscaminas.campoMinas[fila][columna];
+                if (buscaminas.campoMinas[fila][columna] !== "B") {
+                    if (buscaminas.campoMinas[fila][columna] == 0) {
+                        destaparCasilla(fila - 1, columna - 1);
+                        destaparCasilla(fila - 1, columna);
+                        destaparCasilla(fila - 1, columna + 1);
+                        destaparCasilla(fila, columna - 1);
+                        destaparCasilla(fila + 1, columna - 1);
+                        destaparCasilla(fila + 1, columna);
+                        destaparCasilla(fila + 1, columna + 1);
 
-            casilla.classList.add("c" + buscaminas.campoMinas[fila][columna])
-
-            if (buscaminas.campoMinas[fila][columna] !== "B") {
-                if (buscaminas.campoMinas[fila][columna] == 0) {
-                    destaparCasilla(fila - 1, columna - 1);
-                    destaparCasilla(fila - 1, columna);
-                    destaparCasilla(fila - 1, columna + 1);
-                    destaparCasilla(fila, columna - 1);
-                    // destaparCasilla(fila, columna);
-                    destaparCasilla(fila + 1, columna - 1);
-                    destaparCasilla(fila + 1, columna);
-                    destaparCasilla(fila + 1, columna + 1);
-
-                    casilla.innerHTML = "";
+                        casilla.innerHTML = "";
+                    }
+                } else {
+                    casilla.innerHTML = '<img class="explosion" src="IMAGENES/icons/explosion.png">';
+                    resolverTablero(false);
                 }
-            } else {
-                casilla.innerHTML = '<img class="explosion" src="IMAGENES/icons/explosion.png">'
 
-                resolverTablero(false);
             }
-
         }
     }
 }
@@ -164,13 +164,13 @@ function resolverTablero(resultado) {
         fila = Number(fila);
         columna = Number(columna);
 
-        if (casillas[i].innerHTML.includes('<img class="bandera"')) {
+        if (casillas[i].querySelector('img.bandera')) {
             casillas[i].classList.add("destapado");
             if (buscaminas.campoMinas[fila][columna] == "B") {
                 casillas[i].innerHTML = '<img class="bomba" src="IMAGENES/icons/bomba.png">';
+                buscaminas.nMinasEncontradas++;
             } else {
                 casillas[i].innerHTML = '<img class="banderaMal" src="IMAGENES/icons/banderaMal.png">';
-                buscaminas.nMinasEncontradas++;
                 resultado = false;
             }
         } else if (!casillas[i].classList.contains("destapado")) {
