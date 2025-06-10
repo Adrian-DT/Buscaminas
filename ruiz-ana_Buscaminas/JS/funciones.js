@@ -11,8 +11,8 @@ function pintarTablero(nFilas, nColumnas) {
     tablero.style.gridTemplateColumns = "repeat(" + nColumnas + ",25px)";
     tablero.style.gridTemplateRows = "repeat(" + nFilas + ",25px)";
 
-    for (let i = 0; i < nColumnas; i++) {
-        for (let j = 0; j < nFilas; j++) {
+    for (let i = 0; i < nFilas; i++) {
+        for (let j = 0; j < nColumnas; j++) {
             const casilla = document.createElement('div');
             casilla.setAttribute("id", "F" + i + "C" + j);
             casilla.addEventListener("contextmenu", marcar);
@@ -85,7 +85,7 @@ function destaparCasilla(fila, columna) {
                     destaparCasilla(fila - 1, columna);
                     destaparCasilla(fila - 1, columna + 1);
                     destaparCasilla(fila, columna - 1);
-                    destaparCasilla(fila, columna);
+                    // destaparCasilla(fila, columna);
                     destaparCasilla(fila + 1, columna - 1);
                     destaparCasilla(fila + 1, columna);
                     destaparCasilla(fila + 1, columna + 1);
