@@ -51,3 +51,10 @@ body{
 div img{
     width: 20px;
 }
+
+h1 {
+    margin-bottom: 0;
+}
+body p {
+    margin-top: 0;
+}

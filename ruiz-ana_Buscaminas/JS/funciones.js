@@ -3,8 +3,15 @@ const buscaminas = {
     nMinasEncontradas: 0,
     nFilas: 0,
     nColumnas: 0,
-    campoMinas: []
+    campoMinas: [],
+    banderasColocadas: 0
 }
+
+// Variables para el cronómetro
+let tiempo = 0;
+let intervalo = null;
+// Párrafo de tiempo
+const displayTiempo = document.querySelector('#tiempo');
 
 function pintarTablero(nFilas, nColumnas) {
     const tablero = document.querySelector("#tablero");
@@ -134,6 +141,7 @@ function inicio() {
     generarCampoMinas();
     esparcirMinas();
     contarMinas();
+    iniciarCronometro();
 }
 
 function resolverTablero(resultado) {
@@ -179,6 +187,7 @@ function resolverTablero(resultado) {
     } else {
         document.querySelector('#resultado').innerHTML = `¡Has encontrado ${buscaminas.nMinasEncontradas} minas!`
     }
+    detenerCronometro();
 }
 
 
@@ -190,17 +199,19 @@ function resolverTablero(resultado) {
 
         if (casilla.innerHTML.includes('<img class="bandera')) {
             casilla.innerHTML = '<img class="duda" src="IMAGENES/icons/interrogacion.png">'
-            // buscaminas.nMinasEncontradas--;
+            buscaminas.banderasColocadas--;
         } else if (casilla.innerHTML.includes('<img class="duda')) {
             casilla.innerHTML = "";
-        } else {
+        } else if(buscaminas.banderasColocadas < buscaminas.nMinasTot){
             casilla.innerHTML = '<img class="bandera" src="IMAGENES/icons/bandera.png">'
-            // buscaminas.nMinasEncontradas++;
+            buscaminas.banderasColocadas++;
         }
 
         if (buscaminas.nMinasEncontradas == buscaminas.nMinasTot) {
             resolverTablero(true);
         }
+        console.log("Número de banderas", buscaminas.banderasColocadas);
+        actualizarContadorBanderas();
     }
 
     function destapar(e) {
@@ -231,3 +242,31 @@ document.querySelector('#reiniciar').addEventListener('click', () => {
 });
 
     window.onload = inicio();
+
+// Cronómetro
+function iniciarCronometro() {
+    tiempo = 0;
+    displayTiempo.textContent = formatTiempo(tiempo);
+
+    intervalo = setInterval(() => {
+        tiempo++;
+        displayTiempo.textContent = formatTiempo(tiempo);
+    }, 1000);
+}
+
+function detenerCronometro() {
+    clearInterval(intervalo);
+}
+
+function formatTiempo(segundos) {
+    // Convierte segundos a mm:ss
+    const minutos = Math.floor(segundos / 60);
+    const segundosRestantes = segundos % 60;
+    return `${String(minutos).padStart(2, '0')}:${String(segundosRestantes).padStart(2, '0')}`;
+}
+
+// Contar banderas
+function actualizarContadorBanderas() {
+    console.log(`Actualizar banderas ${buscaminas.banderasColocadas}`);
+    document.querySelector('#banderas').textContent = `Número de banderas colocadas: ${buscaminas.banderasColocadas}`;
+}
