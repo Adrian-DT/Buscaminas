@@ -6,6 +6,10 @@ Tablero dinámico (fácil, medio, difícil)
 
 Contador de banderas
 
+Cronómetro
+
+Botón de Reiniciar
+
 Interacción con clic izquierdo (descubrir) y clic derecho (marcar)
 
 Detección de victoria y derrota
@@ -26,10 +30,6 @@ JavaScript ES6
 
 
 ✨ Por hacer
-
-Actualizar minas restantes
-
-Destapar tablero
 
 Solucionar errores
 
